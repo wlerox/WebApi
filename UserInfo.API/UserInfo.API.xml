@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UserInfo.API</name>
+    </assembly>
+    <members>
+        <member name="T:UserInfo.API.Controllers.UsersController">
+            <summary>
+            User Controller
+            </summary>
+        </member>
+        <member name="M:UserInfo.API.Controllers.UsersController.#ctor(UserInfo.Business.Abstract.IUserService)">
+            <summary>
+            Constracter is
+            </summary>
+            <param name="userService"></param>
+            <param name="distributedCache"></param>
+        </member>
+        <member name="M:UserInfo.API.Controllers.UsersController.GetAllUsers">
+            <summary>
+            Get all Users
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.UsersController.GetUserById(System.Int32)">
+            <summary>
+            Get User By ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.UsersController.DeleteUser(System.Int32)">
+            <summary>
+            Delete user by ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.UsersController.CreateNewUser(UserInfo.Entities.User)">
+            <summary>
+            Create New User
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.UsersController.UpdateUser(UserInfo.Entities.User)">
+            <summary>
+            Update User
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

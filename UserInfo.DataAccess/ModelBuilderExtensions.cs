@@ -8,10 +8,8 @@ namespace UserInfo.DataAccess
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            //context.Database.EnsureCreated();
             modelBuilder.Entity<Administrator>().HasData(
                 new Administrator() { ID = 1, UserName = "admin", Password = "1234" });
-            //modelBuilder.Entity<Administrator>().HasIndex(p => p.UserName).IsUnique();
 
 
             modelBuilder.Entity<Geolocation>().HasData(
@@ -27,7 +25,7 @@ namespace UserInfo.DataAccess
                 new Geolocation() { Id = 10, Lat = "-38.2386", Lng = "57.2232" }
                 );
             modelBuilder.Entity<Address>().HasData(
-                new Address() { Id = 1, Street = "Kulas Light", Suite = "Apt. 556", City = "Gwenborough", Zipcode = "92998-3874", GeoId = 1},
+                new Address() { Id = 1, Street = "Kulas Light", Suite = "Apt. 556", City = "Gwenborough", Zipcode = "92998-3874", GeoId = 1 },
                 new Address() { Id = 2, Street = "Victor Plains", Suite = "Suite 879", City = "Wisokyburgh", Zipcode = "90566-7771", GeoId = 2 },
                 new Address() { Id = 3, Street = "Douglas Extension", Suite = "Suite 847", City = "McKenziehaven", Zipcode = "59590-4157", GeoId = 3 },
                 new Address() { Id = 4, Street = "Hoeger Mall", Suite = "Apt. 692", City = "South Elvis", Zipcode = "53919-4257", GeoId = 4 },
@@ -36,7 +34,7 @@ namespace UserInfo.DataAccess
                 new Address() { Id = 7, Street = "Rex Trail", Suite = "Suite 280", City = "Howemouth", Zipcode = "58804-1099", GeoId = 7 },
                 new Address() { Id = 8, Street = "Ellsworth Summit", Suite = "Suite 729", City = "Aliyaview", Zipcode = "45169", GeoId = 8 },
                 new Address() { Id = 9, Street = "Dayna Park", Suite = "Suite 449", City = "Bartholomebury", Zipcode = "76495-3109", GeoId = 9 },
-                new Address() { Id = 10, Street = "Kattie Turnpike", Suite = "Suite 198", City = "Lebsackbury", Zipcode = "31428-2261", GeoId = 10 }) ;
+                new Address() { Id = 10, Street = "Kattie Turnpike", Suite = "Suite 198", City = "Lebsackbury", Zipcode = "31428-2261", GeoId = 10 });
             modelBuilder.Entity<Company>().HasData(
                 new Company() { Id = 1, Name = "Romaguera-Crona", Catchphrase = "Multi-layered client-server neural-net", Bs = "harness real-time e-markets" },
                 new Company() { Id = 2, Name = "Deckow-Crist", Catchphrase = "Proactive didactic contingency", Bs = "synergize scalable supply-chains" },
@@ -49,7 +47,7 @@ namespace UserInfo.DataAccess
                 new Company() { Id = 9, Name = "Yost and Sons", Catchphrase = "Switchable contextually-based project", Bs = "aggregate real-time technologies" },
                 new Company() { Id = 10, Name = "Hoeger LLC", Catchphrase = "Centralized empowering task-force", Bs = "target end-to-end models" });
             modelBuilder.Entity<User>().HasData(
-                new User() { Id = 1, Name = "Leanne Graham", Username = "Bret", Email = "Sincere@april.biz", AddressId = 1, Phone = "1-770-736-8031 x56442", Website = "hildegard.org", CompanyId = 1},
+                new User() { Id = 1, Name = "Leanne Graham", Username = "Bret", Email = "Sincere@april.biz", AddressId = 1, Phone = "1-770-736-8031 x56442", Website = "hildegard.org", CompanyId = 1 },
                 new User() { Id = 2, Name = "Ervin Howell", Username = "Antonette", Email = "Shanna@melissa.tv", AddressId = 2, Phone = "010-692-6593 x09125", Website = "anastasia.net", CompanyId = 2 },
                 new User() { Id = 3, Name = "Clementine Bauch", Username = "Samantha", Email = "Nathan@yesenia.net", AddressId = 3, Phone = "1-463-123-4447", Website = "ramiro.info", CompanyId = 3 },
                 new User() { Id = 4, Name = "Patricia Lebsack", Username = "Karianne", Email = "Julianne.OConner@kory.org", AddressId = 4, Phone = "493-170-9623 x156", Website = "kale.biz", CompanyId = 4 },

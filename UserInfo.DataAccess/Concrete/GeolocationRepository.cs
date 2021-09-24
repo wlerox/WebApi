@@ -63,8 +63,6 @@ namespace UserInfo.DataAccess.Concrete
             if (await GetGeolocationById(geolocation.Id) != null)
             {
                 _DbContext.Geolocations.Update(geolocation);
-                //_DbContext.Entry(Geolocation).State = EntityState.Detached;
-                //_DbContext.Entry<Geolocation>(geolocation).State = EntityState.Detached;
                 await _DbContext.SaveChangesAsync();
             }
             else

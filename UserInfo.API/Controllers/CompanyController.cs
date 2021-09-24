@@ -14,17 +14,13 @@ namespace UserInfo.API.Controllers
     public class CompaniesController : ControllerBase
     {
         private ICompanyService _companyService;
-        //private readonly IDistributedCache _distributedCache;
         /// <summary>
         /// Constracter is
         /// </summary>
         /// <param name="companyService"></param>
-        /// <param name="distributedCache"></param>
         public CompaniesController(ICompanyService companyService)
         {
             _companyService = companyService;
-            //_distributedCache = distributedCache;
-            //_userService = new UserManager();
         }
         /// <summary>
         /// Get all Company

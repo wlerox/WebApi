@@ -57,7 +57,6 @@ namespace UserInfo.API
             var principal = new ClaimsPrincipal(identity);
             var ticket = new AuthenticationTicket(principal,Scheme.Name);
             return AuthenticateResult.Success(ticket);
-            //throw new NotImplementedException();
         }
     }
 }

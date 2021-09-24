@@ -25,8 +25,6 @@ namespace UserInfo.Business.Concrete
             var newUser= await _userRepository.CreateUser(user);
             if (newUser != null)
             {
-                //newUser = await _userRepository.GetUserById(user.Id);
-                //await _cacheManipulation.SetUserInCache(newUser, newUser.Id.ToString());
                 var usersFromDb = await _userRepository.GetAllUsers();
                 if (usersFromDb != null)
                 {
@@ -59,7 +57,6 @@ namespace UserInfo.Business.Concrete
                 if (usersFromDb != null)
                 {
                     await _cacheManipulation.SetUsersInCache(usersFromDb);
-                    //allUsers = await _cacheManipulation.GetAllUsersFromCache(_distributedCache, "allUsers");
                     allUsers = usersFromDb;
                 }
                 else

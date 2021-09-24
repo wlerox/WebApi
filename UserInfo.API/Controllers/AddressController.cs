@@ -14,17 +14,13 @@ namespace UserInfo.API.Controllers
     public class AddressController : ControllerBase
     {
         private IAddressService _addressService;
-        //private readonly IDistributedCache _distributedCache;
         /// <summary>
         /// Constracter is
         /// </summary>
         /// <param name="addressService"></param>
-        /// <param name="distributedCache"></param>
         public AddressController(IAddressService addressService)
         {
             _addressService = addressService;
-            //_distributedCache = distributedCache;
-            //_userService = new UserManager();
         }
         /// <summary>
         /// Get all Address

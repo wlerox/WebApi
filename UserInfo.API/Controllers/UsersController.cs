@@ -16,17 +16,13 @@ namespace UserInfo.API.Controllers
     public class UsersController : ControllerBase
     {
         private IUserService _userService;
-        //private readonly IDistributedCache _distributedCache;
         /// <summary>
         /// Constracter is
         /// </summary>
         /// <param name="userService"></param>
-        /// <param name="distributedCache"></param>
         public UsersController(IUserService userService)
         {
             _userService = userService;
-            //_distributedCache = distributedCache;
-            //_userService = new UserManager();
         }
         /// <summary>
         /// Get all Users
@@ -94,10 +90,6 @@ namespace UserInfo.API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateUser([FromBody] User user)
         {
-            /*if(await _userService.GetUserById(user.Id) != null)
-            {
-                return Ok(await _userService.UpdateUser(user));
-            }*/
             var updateUser = await _userService.UpdateUser(user);
             if (updateUser != null)
             {

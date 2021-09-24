@@ -14,17 +14,13 @@ namespace UserInfo.API.Controllers
     public class GeolocationsController : ControllerBase
     {
         private IGeolocationService _geolocationService;
-        //private readonly IDistributedCache _distributedCache;
         /// <summary>
         /// Constracter is
         /// </summary>
         /// <param name="geolocationService"></param>
-        /// <param name="distributedCache"></param>
         public GeolocationsController(IGeolocationService geolocationService)
         {
             _geolocationService = geolocationService;
-            //_distributedCache = distributedCache;
-            //_userService = new UserManager();
         }
         /// <summary>
         /// Get all Geolocation
@@ -92,10 +88,6 @@ namespace UserInfo.API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateGeo([FromBody] Geolocation geolocation)
         {
-            /*if(await _userService.GetUserById(user.Id) != null)
-            {
-                return Ok(await _userService.UpdateUser(user));
-            }*/
             var updateGeo = await _geolocationService.UpdateGeolocation(geolocation);
             if (updateGeo != null)
             {

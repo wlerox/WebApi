@@ -13,7 +13,6 @@ namespace UserInfo.Business.Concrete
         public bool Login(string username, string password)
         {
            return _authRepository.Login(username, password);
-            //throw new NotImplementedException();
         }
     }
 }

@@ -23,12 +23,6 @@ namespace UserInfo.API
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    //webBuilder.ConfigureKestrel((a, b) => { });
-                    //webBuilder.UseUrls("http://*:5050");
-                    //webBuilder.UseKestrel();
-                    //webBuilder.UseContentRoot(Directory.GetCurrentDirectory());
-                    //webBuilder.UseIISIntegration();
-                   
                     webBuilder.UseStartup<Startup>();
                    });
     }

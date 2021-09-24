@@ -74,7 +74,7 @@ namespace UserInfo.API
                     Version = "v1",
                     //Description="This is description"
                 });
-                x.AddSecurityDefinition("Basic", new OpenApiSecurityScheme
+                x.AddSecurityDefinition("basic", new OpenApiSecurityScheme
                 {
                     Name="Authentication",
                     Type=SecuritySchemeType.Http,

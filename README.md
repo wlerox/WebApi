@@ -9,6 +9,7 @@
   - Uygulamanın çalıştırılma ortamı olarak Docker 
   - Dependincy  injection
   - Entity Framework ile Code-First
+  - Dto(data transfer object) ve Mapper 
   
 Uygulama çalışma yapısı
 

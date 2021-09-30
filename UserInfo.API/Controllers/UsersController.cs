@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using UserInfo.Business.Abstract;
-using UserInfo.Business.Concrete;
-using UserInfo.Entities;
+using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.API.Controllers
 {
@@ -15,7 +14,7 @@ namespace UserInfo.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private IUserService _userService;
+        private readonly IUserService _userService;
         /// <summary>
         /// Constracter is
         /// </summary>
@@ -77,7 +76,7 @@ namespace UserInfo.API.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateNewUser([FromBody] User user)
+        public async Task<IActionResult> CreateNewUser([FromBody] UserDto user)
         {
             var newUser = await _userService.CreateUser(user);
             return Ok(newUser);
@@ -88,7 +87,7 @@ namespace UserInfo.API.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> UpdateUser([FromBody] User user)
+        public async Task<IActionResult> UpdateUser([FromBody] UserDto user)
         {
             var updateUser = await _userService.UpdateUser(user);
             if (updateUser != null)

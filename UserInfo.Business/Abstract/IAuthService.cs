@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace UserInfo.Business.Abstract
 {
     public interface IAuthService

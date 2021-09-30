@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using UserInfo.Entities;
+using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.DataAccess.Abstract
 {
     public interface IAddressRepository
     {
-        Task<List<Address>> GetAllAddress();
-        Task<Address> GetAddressById(int id);
-        Task<Address> CreateAddress(Address address);
-        Task<Address> UpdateAddress(Address address);
+        Task<List<AddressDto>> GetAllAddress();
+        Task<AddressDto> GetAddressById(int id);
+        Task<AddressDto> CreateAddress(AddressDto address);
+        Task<AddressDto> UpdateAddress(AddressDto address);
         Task DeleteAddress(int id);
     }
 }

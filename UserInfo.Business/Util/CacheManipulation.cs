@@ -3,41 +3,47 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UserInfo.Entities;
+using UserInfo.Business.Abstract;
+using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.Business.Concrete
 {
-    public class CacheManipulation
+    public class CacheManipulation: ICacheManipulation
     {
         readonly IDistributedCache _distributedCache;
         public CacheManipulation(IDistributedCache distributedCache)
         {
             _distributedCache = distributedCache;
         }
-        public async Task<List<User>> GetAllUsersFromCache()
+        //get all users from redis cache
+        public async Task<List<UserDto>> GetAllUsersFromCache()
         {
             var usersFromCache = await _distributedCache.GetStringAsync("allUsers");
-            var allUsers = JsonConvert.DeserializeObject<List<User>>(usersFromCache);
+            var allUsers = JsonConvert.DeserializeObject<List<UserDto>>(usersFromCache);
             return allUsers;
         }
-        public async Task<User> GetUserFromCache(String key)
+        //get only one user from redis cache
+        public async Task<UserDto> GetUserFromCache(String key)
         {
             var userFromCache = await _distributedCache.GetStringAsync("user_" + key);
-            var user = JsonConvert.DeserializeObject<User>(userFromCache);
+            var user = JsonConvert.DeserializeObject<UserDto>(userFromCache);
 
             return user;
 
         }
-        public async Task SetUsersInCache(List<User> allUsers)
+        //put all users in redis cache
+        public async Task SetUsersInCache(List<UserDto> allUsers)
         {
             var allUsersInString = JsonConvert.SerializeObject(allUsers);
             await _distributedCache.SetStringAsync("allUsers", allUsersInString);
         }
-        public async Task SetUserInCache(User user, String key)
+        //put one user in redis cache
+        public async Task SetUserInCache(UserDto user, String key)
         {
             var UserInString = JsonConvert.SerializeObject(user);
             await _distributedCache.SetStringAsync("user_" + key, UserInString);
         }
+        //delete user or all users from redis cache
         public async Task deleteItemCache(String key)
         {
             await _distributedCache.RemoveAsync("user_" + key);

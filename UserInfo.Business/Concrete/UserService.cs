@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UserInfo.Business.Abstract;
 using UserInfo.DataAccess.Abstract;
-using UserInfo.Entities;
+using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.Business.Concrete
 {
@@ -12,15 +12,15 @@ namespace UserInfo.Business.Concrete
     {
         private IUserRepository _userRepository;
         private readonly IDistributedCache _distributedCache;
-        private CacheManipulation _cacheManipulation;
-        public UserService(IUserRepository userRepository,IDistributedCache distributedCache)
+        private ICacheManipulation _cacheManipulation;
+        public UserService(IUserRepository userRepository,IDistributedCache distributedCache,ICacheManipulation cacheManipulation)
         {
             _userRepository = userRepository;
             _distributedCache = distributedCache;
-            _cacheManipulation = new CacheManipulation(_distributedCache);
+            _cacheManipulation = cacheManipulation;
             //_userRepository = new UserRepository();
         }
-        public async Task<User> CreateUser(User user)
+        public async Task<UserDto> CreateUser(UserDto user)
         {
             var newUser= await _userRepository.CreateUser(user);
             if (newUser != null)
@@ -47,9 +47,9 @@ namespace UserInfo.Business.Concrete
             }
         }
 
-        public async Task<List<User>> GetAllUsers()
+        public async Task<List<UserDto>> GetAllUsers()
         {
-            var allUsers = new List<User>();
+            var allUsers = new List<UserDto>();
             if (String.IsNullOrEmpty(await _distributedCache.GetStringAsync("allUsers")))
             {
                 var usersFromDb = await _userRepository.GetAllUsers();
@@ -73,9 +73,9 @@ namespace UserInfo.Business.Concrete
             return allUsers;
         }
 
-        public async Task<User> GetUserById(int id)
+        public async Task<UserDto> GetUserById(int id)
         {
-            var user = new User();
+            var user = new UserDto();
             if (String.IsNullOrEmpty(await _distributedCache.GetStringAsync("user_"+id.ToString())))
             {
                 var userFromDb = await _userRepository.GetUserById(id);
@@ -99,7 +99,7 @@ namespace UserInfo.Business.Concrete
             return user;
         }
 
-        public async Task<User> UpdateUser(User user)
+        public async Task<UserDto> UpdateUser(UserDto user)
         {
             var updateUser= await _userRepository.UpdateUser(user);
             if (updateUser != null)

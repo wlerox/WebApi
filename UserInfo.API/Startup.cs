@@ -15,6 +15,7 @@ using UserInfo.Business.Concrete;
 using UserInfo.DataAccess;
 using UserInfo.DataAccess.Abstract;
 using UserInfo.DataAccess.Concrete;
+using UserInfo.DataAccess.MapperProfiles;
 
 namespace UserInfo.API
 {
@@ -33,6 +34,9 @@ namespace UserInfo.API
             //controller
             services.AddControllers();
 
+            //mapper
+            services.AddAutoMapper(typeof(ApplicationProfile));
+
             //dependincy injection
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
@@ -44,6 +48,10 @@ namespace UserInfo.API
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IGeolocationService, GeolocationService>();
             services.AddScoped<IGeolocationRepository, GeolocationRepository>();
+            services.AddScoped<ICacheManipulation, CacheManipulation>();
+            
+
+           
 
             //database connection
             services.AddDbContext<UserDbContext>(options => {

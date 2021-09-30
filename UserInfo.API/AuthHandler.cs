@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Security.Claims;
@@ -43,7 +42,7 @@ namespace UserInfo.API
                 var password = credentials.LastOrDefault();
                 if (!_authService.Login(username, password)) {
                     throw new ArgumentException("Invalid Username or Password");
-                } ;
+                } 
             }
             catch (Exception ex)
             {

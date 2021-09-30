@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using UserInfo.Entities;
+using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.Business.Abstract
 {
     public interface ICompanyService
     {
-        Task<List<Company>> GetAllCompany();
-        Task<Company> GetCompanyById(int id);
-        Task<Company> CreateCompany(Company company);
-        Task<Company> UpdateCompany(Company company);
+        Task<List<CompanyDto>> GetAllCompany();
+        Task<CompanyDto> GetCompanyById(int id);
+        Task<CompanyDto> CreateCompany(CompanyDto company);
+        Task<CompanyDto> UpdateCompany(CompanyDto company);
         Task DeleteCompany(int id);
     }
 }

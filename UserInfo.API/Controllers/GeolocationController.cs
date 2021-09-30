@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UserInfo.Business.Abstract;
-using UserInfo.Entities;
+using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.API.Controllers
 {
@@ -15,7 +11,7 @@ namespace UserInfo.API.Controllers
     [ApiController]
     public class GeolocationsController : ControllerBase
     {
-        private IGeolocationService _geolocationService;
+        private readonly IGeolocationService _geolocationService;
         /// <summary>
         /// Constracter is
         /// </summary>
@@ -77,7 +73,7 @@ namespace UserInfo.API.Controllers
         /// <param name="geolocation"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateNewGeo([FromBody] Geolocation geolocation)
+        public async Task<IActionResult> CreateNewGeo([FromBody] GeolocationDto geolocation)
         {
             var newGeo = await _geolocationService.CreateGeolocation(geolocation);
             return Ok(newGeo);
@@ -88,7 +84,7 @@ namespace UserInfo.API.Controllers
         /// <param name="geolocation"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> UpdateGeo([FromBody] Geolocation geolocation)
+        public async Task<IActionResult> UpdateGeo([FromBody] GeolocationDto geolocation)
         {
             var updateGeo = await _geolocationService.UpdateGeolocation(geolocation);
             if (updateGeo != null)

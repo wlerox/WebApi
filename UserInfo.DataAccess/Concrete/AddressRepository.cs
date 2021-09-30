@@ -1,23 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UserInfo.DataAccess.Abstract;
 using UserInfo.Entities;
+using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.DataAccess.Concrete
 {
     public class AddressRepository : IAddressRepository
     {
         private readonly UserDbContext _DbContext;
-        public AddressRepository(UserDbContext context)
+        private readonly IMapper _mapper;
+        public AddressRepository(UserDbContext context,IMapper mapper)
         {
             _DbContext = context;
+            _mapper = mapper;
         }
-        public async Task<Address> CreateAddress(Address address)
+        public async Task<AddressDto> CreateAddress(AddressDto address)
         {
-            _DbContext.Addresses.Add(address);
+            var createAddress = _mapper.Map<Address>(address);
+            _DbContext.Addresses.Add(createAddress);
             await _DbContext.SaveChangesAsync();
-            return address;
+            return await GetAddressById(createAddress.Id);
         }
 
         public async Task DeleteAddress(int id)
@@ -25,18 +30,20 @@ namespace UserInfo.DataAccess.Concrete
             var deleteAddress = await GetAddressById(id);
             if (deleteAddress != null)
             {
-                _DbContext.Addresses.Remove(deleteAddress);
+                var address = _mapper.Map<Address>(deleteAddress);
+                _DbContext.Addresses.Remove(address);
                 await _DbContext.SaveChangesAsync();
             }
         }
 
-        public async Task<Address> GetAddressById(int id)
+        public async Task<AddressDto> GetAddressById(int id)
         {
-            var address = await _DbContext.Addresses.Include(g => g.Geo)
+            var getAddress = await _DbContext.Addresses.Include(g => g.Geo)
                                          .AsNoTracking()
                                          .FirstOrDefaultAsync(b => b.Id.Equals(id));
-            if (address != null)
+            if (getAddress != null)
             {
+                var address = _mapper.Map<AddressDto>(getAddress);
                 return address;
             }
             else
@@ -45,13 +52,15 @@ namespace UserInfo.DataAccess.Concrete
             }
         }
 
-        public async Task<List<Address>> GetAllAddress()
+        public async Task<List<AddressDto>> GetAllAddress()
         {
-            var address = await _DbContext.Addresses.Include(g => g.Geo)
+            var getAddressList = await _DbContext.Addresses.Include(g => g.Geo)
                                             .ToListAsync();
-            if (address != null)
+            if (getAddressList != null)
             {
-                return address;
+                var addressList = _mapper.Map<List<AddressDto>>(getAddressList);
+                return addressList;
+
             }
             else
             {
@@ -59,12 +68,14 @@ namespace UserInfo.DataAccess.Concrete
             }
         }
 
-        public async Task<Address> UpdateAddress(Address address)
+        public async Task<AddressDto> UpdateAddress(AddressDto address)
         {
             if (await GetAddressById(address.Id) != null)
             {
-                _DbContext.Addresses.Update(address);
+                var updateAddress = _mapper.Map<Address>(address);
+                _DbContext.Addresses.Update(updateAddress);
                 await _DbContext.SaveChangesAsync();
+                address = await GetAddressById(updateAddress.Id);
             }
             else
             {

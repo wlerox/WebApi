@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UserInfo.Business.Abstract;
-using UserInfo.Entities;
+using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.API.Controllers
 {
@@ -15,7 +11,7 @@ namespace UserInfo.API.Controllers
     [ApiController]
     public class AddressController : ControllerBase
     {
-        private IAddressService _addressService;
+        private readonly IAddressService _addressService;
         /// <summary>
         /// Constracter is
         /// </summary>
@@ -77,7 +73,7 @@ namespace UserInfo.API.Controllers
         /// <param name="address"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateNewAddress([FromBody] Address address)
+        public async Task<IActionResult> CreateNewAddress([FromBody] AddressDto address)
         {
             var newAddres = await _addressService.CreateAddress(address);
             return Ok(newAddres);
@@ -88,7 +84,7 @@ namespace UserInfo.API.Controllers
         /// <param name="address"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> UpdateAddress([FromBody] Address address)
+        public async Task<IActionResult> UpdateAddress([FromBody] AddressDto address)
         {
             var updateAddress = await _addressService.UpdateAddress(address);
             if (updateAddress != null)

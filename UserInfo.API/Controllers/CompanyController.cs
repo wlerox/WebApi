@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UserInfo.Business.Abstract;
-using UserInfo.Entities;
+using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.API.Controllers
 {
@@ -15,7 +11,7 @@ namespace UserInfo.API.Controllers
     [ApiController]
     public class CompaniesController : ControllerBase
     {
-        private ICompanyService _companyService;
+        private readonly ICompanyService _companyService;
         /// <summary>
         /// Constracter is
         /// </summary>
@@ -77,7 +73,7 @@ namespace UserInfo.API.Controllers
         /// <param name="company"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateNewCompany([FromBody] Company company)
+        public async Task<IActionResult> CreateNewCompany([FromBody] CompanyDto company)
         {
             var newCompany = await _companyService.CreateCompany(company);
             return Ok(newCompany);
@@ -88,7 +84,7 @@ namespace UserInfo.API.Controllers
         /// <param name="company"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> UpdateCompany([FromBody] Company company)
+        public async Task<IActionResult> UpdateCompany([FromBody] CompanyDto company)
         {
 
             var updateCompany = await _companyService.UpdateCompany(company);

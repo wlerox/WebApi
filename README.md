@@ -9,12 +9,13 @@
   - Uygulamanın çalıştırılma ortamı olarak Docker 
   - Dependincy  injection
   - Entity Framework ile Code-First
+  - Dto(data transfer object) ve Mapper 
   
 Uygulama çalışma yapısı
 
 uygulamanın hatasız çalışabilmesi için proje indirildikten sonra
-  -powershell kullanılarak "docker compose" çalıştırılması ile dockere gerekli uygulamaların yüklenmesi gerçekleştirilmektedir.
-  -gerekli yüklemeler sonucunda uygulama ayağa kaltığında "http://localhost:5050/swagger/index.html" linkinden APİ a ulaşılabilmektedir.
-  -api icerigine ulaşabilmek için yetki(dogrulama) işlemi gerekmektedir.
-  -uygulamada cache işlemi sadece "Users" bölümünde aktif olarak çalışmakta diğer bölümlerde çalışmamaktadır.
+  - powershell kullanılarak "docker compose" çalıştırılması ile dockere gerekli uygulamaların yüklenmesi gerçekleştirilmektedir.
+  - gerekli yüklemeler sonucunda uygulama ayağa kaltığında "http://localhost:5050/swagger/index.html" linkinden APİ ulaşılabilir olmaktadır.
+  - api icerigine ulaşabilmek için yetki(dogrulama) işlemi gerekmektedir.
+  - uygulamada cache işlemi sadece "Users" bölümünde aktif olarak çalışmakta diğer bölümlerde çalışmamaktadır.
 

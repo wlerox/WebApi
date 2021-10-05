@@ -10,10 +10,10 @@ namespace UserInfo.Business.Concrete
 {
     public class UserService : IUserService
     {
-        private IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IDistributedCache _distributedCache;
-        private ICacheManipulation _cacheManipulation;
-        public UserService(IUserRepository userRepository,IDistributedCache distributedCache,ICacheManipulation cacheManipulation)
+        private readonly ICacheManipulation<UserDto> _cacheManipulation;
+        public UserService(IUserRepository userRepository, IDistributedCache distributedCache, ICacheManipulation<UserDto> cacheManipulation)
         {
             _userRepository = userRepository;
             _distributedCache = distributedCache;
@@ -22,13 +22,13 @@ namespace UserInfo.Business.Concrete
         }
         public async Task<UserDto> CreateUser(UserDto user)
         {
-            var newUser= await _userRepository.CreateUser(user);
+            var newUser = await _userRepository.CreateUser(user);
             if (newUser != null)
             {
                 var usersFromDb = await _userRepository.GetAllUsers();
                 if (usersFromDb != null)
                 {
-                    await _cacheManipulation.SetUsersInCache(usersFromDb);
+                    await _cacheManipulation.SetAllOfItemsInCache(usersFromDb, "allUser");
                 }
             }
 
@@ -38,25 +38,25 @@ namespace UserInfo.Business.Concrete
         public async Task DeleteUserById(int id)
         {
             await _userRepository.DeleteUser(id);
-            await _cacheManipulation.deleteItemCache(id.ToString());
-            
+            await _cacheManipulation.deleteItemCache("user_" + id.ToString());
+
             var usersFromDb = await _userRepository.GetAllUsers();
             if (usersFromDb != null)
             {
-                await _cacheManipulation.SetUsersInCache(usersFromDb);
+                await _cacheManipulation.SetAllOfItemsInCache(usersFromDb, "allUser");
             }
         }
 
         public async Task<List<UserDto>> GetAllUsers()
         {
             var allUsers = new List<UserDto>();
-            if (String.IsNullOrEmpty(await _distributedCache.GetStringAsync("allUsers")))
+            if (String.IsNullOrEmpty(await _distributedCache.GetStringAsync("allUser")))
             {
                 var usersFromDb = await _userRepository.GetAllUsers();
-                
+
                 if (usersFromDb != null)
                 {
-                    await _cacheManipulation.SetUsersInCache(usersFromDb);
+                    await _cacheManipulation.SetAllOfItemsInCache(usersFromDb, "allUser");
                     allUsers = usersFromDb;
                 }
                 else
@@ -67,22 +67,22 @@ namespace UserInfo.Business.Concrete
             }
             else
             {
-                allUsers = await _cacheManipulation.GetAllUsersFromCache();
+                allUsers = await _cacheManipulation.GetAllOfItemsFromCache("allUser");
             }
-            
+
             return allUsers;
         }
 
         public async Task<UserDto> GetUserById(int id)
         {
             var user = new UserDto();
-            if (String.IsNullOrEmpty(await _distributedCache.GetStringAsync("user_"+id.ToString())))
+            if (String.IsNullOrEmpty(await _distributedCache.GetStringAsync("user_" + id.ToString())))
             {
                 var userFromDb = await _userRepository.GetUserById(id);
-               
+
                 if (userFromDb != null)
                 {
-                    await _cacheManipulation.SetUserInCache(userFromDb ,id.ToString());
+                    await _cacheManipulation.SetItemInCache(userFromDb, "user_" + id.ToString());
                     //user = await _cacheManipulation.GetUserFromCache(_distributedCache, id.ToString());
                     user = userFromDb;
                 }
@@ -93,28 +93,25 @@ namespace UserInfo.Business.Concrete
             }
             else
             {
-                user = await _cacheManipulation.GetUserFromCache(id.ToString());
+                user = await _cacheManipulation.GetItemFromCache("user_" + id.ToString());
             }
-            
+
             return user;
         }
 
         public async Task<UserDto> UpdateUser(UserDto user)
         {
-            var updateUser= await _userRepository.UpdateUser(user);
+            var updateUser = await _userRepository.UpdateUser(user);
             if (updateUser != null)
             {
-                await _cacheManipulation.deleteItemCache(user.Id.ToString());
-                //await _cacheManipulation.SetUserInCache(updateUser, user.Id.ToString());
+                await _cacheManipulation.deleteItemCache("user_" + updateUser.Id.ToString());
                 var usersFromDb = await _userRepository.GetAllUsers();
 
                 if (usersFromDb != null)
                 {
-                    await _cacheManipulation.SetUsersInCache(usersFromDb);
+                    await _cacheManipulation.SetAllOfItemsInCache(usersFromDb, "allUser");
                 }
             }
-            
-
             return updateUser;
         }
     }

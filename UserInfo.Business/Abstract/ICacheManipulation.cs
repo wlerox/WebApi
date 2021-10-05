@@ -5,12 +5,12 @@ using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.Business.Abstract
 {
-    public interface ICacheManipulation
+    public interface ICacheManipulation<T> where T:class
     {
-        Task<List<UserDto>> GetAllUsersFromCache();
-        Task<UserDto> GetUserFromCache(String key);
-        Task SetUsersInCache(List<UserDto> allUsers);
-        Task SetUserInCache(UserDto user, String key);
+        Task<List<T>> GetAllOfItemsFromCache(String key);
+        Task<T> GetItemFromCache(String key);
+        Task SetAllOfItemsInCache(List<T> allitems, String key);
+        Task SetItemInCache(T item, String key);
         Task deleteItemCache(String key);
     }
 }

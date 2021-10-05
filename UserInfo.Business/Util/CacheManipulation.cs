@@ -4,11 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UserInfo.Business.Abstract;
-using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.Business.Concrete
 {
-    public class CacheManipulation: ICacheManipulation
+    public class CacheManipulation<T>: ICacheManipulation<T> where T:class
     {
         readonly IDistributedCache _distributedCache;
         public CacheManipulation(IDistributedCache distributedCache)
@@ -16,37 +15,37 @@ namespace UserInfo.Business.Concrete
             _distributedCache = distributedCache;
         }
         //get all users from redis cache
-        public async Task<List<UserDto>> GetAllUsersFromCache()
+        public async Task<List<T>> GetAllOfItemsFromCache(String key)
         {
-            var usersFromCache = await _distributedCache.GetStringAsync("allUsers");
-            var allUsers = JsonConvert.DeserializeObject<List<UserDto>>(usersFromCache);
-            return allUsers;
+            var itemsFromCache = await _distributedCache.GetStringAsync(key);
+            var allItems = JsonConvert.DeserializeObject<List<T>>(itemsFromCache);
+            return allItems;
         }
         //get only one user from redis cache
-        public async Task<UserDto> GetUserFromCache(String key)
+        public async Task<T> GetItemFromCache(String key)
         {
-            var userFromCache = await _distributedCache.GetStringAsync("user_" + key);
-            var user = JsonConvert.DeserializeObject<UserDto>(userFromCache);
+            var itemFromCache = await _distributedCache.GetStringAsync(key);
+            var item = JsonConvert.DeserializeObject<T>(itemFromCache);
 
-            return user;
+            return item;
 
         }
         //put all users in redis cache
-        public async Task SetUsersInCache(List<UserDto> allUsers)
+        public async Task SetAllOfItemsInCache(List<T> allItems, String key)
         {
-            var allUsersInString = JsonConvert.SerializeObject(allUsers);
-            await _distributedCache.SetStringAsync("allUsers", allUsersInString);
+            var allItemsInString = JsonConvert.SerializeObject(allItems);
+            await _distributedCache.SetStringAsync(key, allItemsInString);
         }
         //put one user in redis cache
-        public async Task SetUserInCache(UserDto user, String key)
+        public async Task SetItemInCache(T item, String key)
         {
-            var UserInString = JsonConvert.SerializeObject(user);
-            await _distributedCache.SetStringAsync("user_" + key, UserInString);
+            var itemInString = JsonConvert.SerializeObject(item);
+            await _distributedCache.SetStringAsync(key, itemInString);
         }
         //delete user or all users from redis cache
         public async Task deleteItemCache(String key)
         {
-            await _distributedCache.RemoveAsync("user_" + key);
+            await _distributedCache.RemoveAsync(key);
         }
     }
 }

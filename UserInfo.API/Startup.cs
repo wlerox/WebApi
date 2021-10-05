@@ -16,6 +16,7 @@ using UserInfo.DataAccess;
 using UserInfo.DataAccess.Abstract;
 using UserInfo.DataAccess.Concrete;
 using UserInfo.DataAccess.MapperProfiles;
+using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.API
 {
@@ -48,10 +49,13 @@ namespace UserInfo.API
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IGeolocationService, GeolocationService>();
             services.AddScoped<IGeolocationRepository, GeolocationRepository>();
-            services.AddScoped<ICacheManipulation, CacheManipulation>();
-            
+            services.AddScoped<ICacheManipulation<UserDto>, CacheManipulation<UserDto>>();
+            services.AddScoped<ICacheManipulation<AddressDto>, CacheManipulation<AddressDto>>();
+            services.AddScoped<ICacheManipulation<CompanyDto>, CacheManipulation<CompanyDto>>();
+            services.AddScoped<ICacheManipulation<GeolocationDto>, CacheManipulation<GeolocationDto>>();
 
-           
+
+
 
             //database connection
             services.AddDbContext<UserDbContext>(options => {

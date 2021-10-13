@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using UserInfo.Entities;
 using UserInfo.Entities.DtoModel;
+using UserInfo.Entities.Model;
 
 namespace UserInfo.DataAccess.MapperProfiles
 {
@@ -29,6 +30,8 @@ namespace UserInfo.DataAccess.MapperProfiles
                 .ForMember(destination => destination.Website, operation => operation.MapFrom(source => source.Website))
                 .ForMember(destination => destination.CompanyId, operation => operation.MapFrom(source => source.CompanyId)).ReverseMap();
             */
+            CreateMap<Administrator, AdminDto>().ReverseMap();
+            CreateMap<AdminDto, Administrator>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<UserDto, User>().ReverseMap();
             CreateMap<Address, AddressDto>().ReverseMap();

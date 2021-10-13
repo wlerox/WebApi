@@ -4,6 +4,126 @@
         <name>UserInfo.API</name>
     </assembly>
     <members>
+        <member name="M:UserInfo.API.Controllers.AddressController.#ctor(UserInfo.Business.Abstract.IAddressService)">
+            <summary>
+            Constracter is
+            </summary>
+            <param name="addressService"></param>
+        </member>
+        <member name="M:UserInfo.API.Controllers.AddressController.GetAllAddress">
+            <summary>
+            Get all Address
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.AddressController.GetAddressById(System.Int32)">
+            <summary>
+            Get Address By ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.AddressController.DeleteAddress(System.Int32)">
+            <summary>
+            Delete Address by ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.AddressController.CreateNewAddress(UserInfo.Entities.DtoModel.AddressDto)">
+            <summary>
+            Create New Address
+            </summary>
+            <param name="address"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.AddressController.UpdateAddress(UserInfo.Entities.DtoModel.AddressDto)">
+            <summary>
+            Update Address
+            </summary>
+            <param name="address"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.CompaniesController.#ctor(UserInfo.Business.Abstract.ICompanyService)">
+            <summary>
+            Constracter is
+            </summary>
+            <param name="companyService"></param>
+        </member>
+        <member name="M:UserInfo.API.Controllers.CompaniesController.GetAllCompany">
+            <summary>
+            Get all Company
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.CompaniesController.GetCompanyById(System.Int32)">
+            <summary>
+            Get Company By ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.CompaniesController.DeleteCompany(System.Int32)">
+            <summary>
+            Delete Company by ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.CompaniesController.CreateNewCompany(UserInfo.Entities.DtoModel.CompanyDto)">
+            <summary>
+            Create New Company
+            </summary>
+            <param name="company"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.CompaniesController.UpdateCompany(UserInfo.Entities.DtoModel.CompanyDto)">
+            <summary>
+            Update Company
+            </summary>
+            <param name="company"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.GeolocationsController.#ctor(UserInfo.Business.Abstract.IGeolocationService)">
+            <summary>
+            Constracter is
+            </summary>
+            <param name="geolocationService"></param>
+        </member>
+        <member name="M:UserInfo.API.Controllers.GeolocationsController.GetAllGeo">
+            <summary>
+            Get all Geolocation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.GeolocationsController.GetGeoById(System.Int32)">
+            <summary>
+            Get Geolocation By ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.GeolocationsController.DeleteGeo(System.Int32)">
+            <summary>
+            Delete Geolocation by ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.GeolocationsController.CreateNewGeo(UserInfo.Entities.DtoModel.GeolocationDto)">
+            <summary>
+            Create New Geolocation
+            </summary>
+            <param name="geolocation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.GeolocationsController.UpdateGeo(UserInfo.Entities.DtoModel.GeolocationDto)">
+            <summary>
+            Update Geolocation
+            </summary>
+            <param name="geolocation"></param>
+            <returns></returns>
+        </member>
         <member name="T:UserInfo.API.Controllers.UsersController">
             <summary>
             User Controller
@@ -14,7 +134,6 @@
             Constracter is
             </summary>
             <param name="userService"></param>
-            <param name="distributedCache"></param>
         </member>
         <member name="M:UserInfo.API.Controllers.UsersController.GetAllUsers">
             <summary>
@@ -36,14 +155,14 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:UserInfo.API.Controllers.UsersController.CreateNewUser(UserInfo.Entities.User)">
+        <member name="M:UserInfo.API.Controllers.UsersController.CreateNewUser(UserInfo.Entities.DtoModel.UserDto)">
             <summary>
             Create New User
             </summary>
             <param name="user"></param>
             <returns></returns>
         </member>
-        <member name="M:UserInfo.API.Controllers.UsersController.UpdateUser(UserInfo.Entities.User)">
+        <member name="M:UserInfo.API.Controllers.UsersController.UpdateUser(UserInfo.Entities.DtoModel.UserDto)">
             <summary>
             Update User
             </summary>

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
+using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.DataAccess.Abstract
 {
     public interface IAuthRepository
     {
-        bool Login(string username, String password);
+        Task<string> Login(AdminDto admin);
     }
 }

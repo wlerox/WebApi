@@ -1,8 +1,11 @@
 ﻿
+using System.Threading.Tasks;
+using UserInfo.Entities.DtoModel;
+
 namespace UserInfo.Business.Abstract
 {
     public interface IAuthService
     {
-        bool Login(string username,string password);
+        Task<string> Login(AdminDto admin);
     }
 }

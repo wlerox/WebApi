@@ -13,7 +13,7 @@ using UserInfo.Business.Abstract;
 
 namespace UserInfo.API
 {
-    public class AuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+    /*public class AuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
         readonly IAuthService _authService;
         public AuthHandler(
@@ -57,5 +57,5 @@ namespace UserInfo.API
             var ticket = new AuthenticationTicket(principal,Scheme.Name);
             return AuthenticateResult.Success(ticket);
         }
-    }
+}*/
 }

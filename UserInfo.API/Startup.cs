@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
@@ -6,15 +7,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using UserInfo.Business.Abstract;
 using UserInfo.Business.Concrete;
 using UserInfo.DataAccess;
 using UserInfo.DataAccess.Abstract;
 using UserInfo.DataAccess.Concrete;
+using UserInfo.DataAccess.Handler;
 using UserInfo.DataAccess.MapperProfiles;
 using UserInfo.Entities.DtoModel;
 
@@ -49,13 +53,8 @@ namespace UserInfo.API
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IGeolocationService, GeolocationService>();
             services.AddScoped<IGeolocationRepository, GeolocationRepository>();
-            services.AddScoped<ICacheManipulation<UserDto>, CacheManipulation<UserDto>>();
-            services.AddScoped<ICacheManipulation<AddressDto>, CacheManipulation<AddressDto>>();
-            services.AddScoped<ICacheManipulation<CompanyDto>, CacheManipulation<CompanyDto>>();
-            services.AddScoped<ICacheManipulation<GeolocationDto>, CacheManipulation<GeolocationDto>>();
-
-
-
+            services.AddScoped<IJwtTokenHandler, JwtTokenHandler>();
+            services.AddScoped(typeof(ICacheManipulation<>), typeof(CacheManipulation<>));
 
             //database connection
             services.AddDbContext<UserDbContext>(options => {
@@ -69,30 +68,31 @@ namespace UserInfo.API
                 //var port = Configuration["RedisDbPort"] ?? "6379";
                 //options.Configuration =$"{host}:{port}";
                 options.Configuration = Configuration.GetConnectionString("RedisDBConnection");
-                });
+            });
 
-           
+
             //data protection
             services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(@"server/share/directory/"));
 
-            
+
 
             //swagger
             services.AddSwaggerGen(x => {
                 //x.EnableAnnotations();
-                x.SwaggerDoc("v1", new OpenApiInfo 
-                { 
-                    Title = "User Information API", 
+                x.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "User Information API",
                     Version = "v1",
                     //Description="This is description"
                 });
-                x.AddSecurityDefinition("basic", new OpenApiSecurityScheme
+                x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name="Authentication",
                     Type=SecuritySchemeType.Http,
-                    Scheme ="basic",
+                    Scheme ="Bearer",
+                    BearerFormat="JWT",
                     In=ParameterLocation.Header,
-                    Description="Basic Auth Header"
+                    Description= "JWT Authorization header using the Bearer scheme."
                 });
                 x.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {{
@@ -101,7 +101,7 @@ namespace UserInfo.API
                         Reference=new OpenApiReference
                         {
                             Type=ReferenceType.SecurityScheme,
-                            Id="basic"
+                            Id="Bearer"
                         }
                     },
                     new string[]{}}
@@ -111,8 +111,26 @@ namespace UserInfo.API
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 x.IncludeXmlComments(xmlPath);
             });
-            services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, AuthHandler>("BasicAuthentication", null);
-            
+            //services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, AuthHandler>("BasicAuthentication", null);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = false,
+                    ValidateAudience=false,
+                    ValidateLifetime=true,
+                    //ValidIssuer= Configuration["JwtAuth:Issuer"],
+                    //ValidAudience= Configuration["JwtAuth:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["JwtAuth:Key"]))
+                };
+            });
             //
             services.AddControllers().AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

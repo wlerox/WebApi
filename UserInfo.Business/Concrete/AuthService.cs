@@ -1,5 +1,7 @@
-﻿using UserInfo.Business.Abstract;
+﻿using System.Threading.Tasks;
+using UserInfo.Business.Abstract;
 using UserInfo.DataAccess.Abstract;
+using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.Business.Concrete
 {
@@ -10,9 +12,9 @@ namespace UserInfo.Business.Concrete
         {
             _authRepository = authRepository;
         }
-        public bool Login(string username, string password)
+        public async Task<string> Login(AdminDto admin)
         {
-           return _authRepository.Login(username, password);
+           return await _authRepository.Login(admin);
         }
     }
 }

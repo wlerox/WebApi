@@ -15,12 +15,11 @@ using System.Reflection;
 using System.Text;
 using UserInfo.Business.Abstract;
 using UserInfo.Business.Concrete;
+using UserInfo.Business.Handler;
 using UserInfo.DataAccess;
 using UserInfo.DataAccess.Abstract;
 using UserInfo.DataAccess.Concrete;
-using UserInfo.DataAccess.Handler;
 using UserInfo.DataAccess.MapperProfiles;
-using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.API
 {

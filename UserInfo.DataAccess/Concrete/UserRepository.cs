@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UserInfo.DataAccess.Abstract;
 using UserInfo.Entities;
 using UserInfo.Entities.DtoModel;
+using UserInfo.Entities.Model;
 
 namespace UserInfo.DataAccess.Concrete
 {
@@ -22,6 +23,11 @@ namespace UserInfo.DataAccess.Concrete
         public async Task<UserDto> CreateUser(UserDto newuser)
         {
             var userCreate = _mapper.Map<User>(newuser);
+            var adminUser = new Administrator();
+            adminUser.UserName = userCreate.Username;
+            adminUser.Password = "1234";
+            adminUser.Role = "User";
+            _DbContext.Administrators.Add(adminUser);
             _DbContext.Users.Add(userCreate);
             await _DbContext.SaveChangesAsync();
             return await GetUserById(userCreate.Id);

@@ -30,6 +30,8 @@ namespace UserInfo.DataAccess.MapperProfiles
                 .ForMember(destination => destination.Website, operation => operation.MapFrom(source => source.Website))
                 .ForMember(destination => destination.CompanyId, operation => operation.MapFrom(source => source.CompanyId)).ReverseMap();
             */
+            CreateMap<Administrator, AdminSetDto>().ReverseMap();
+            CreateMap<AdminSetDto, Administrator>().ReverseMap();
             CreateMap<Administrator, AdminDto>().ReverseMap();
             CreateMap<AdminDto, Administrator>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();

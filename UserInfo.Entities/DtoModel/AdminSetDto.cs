@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace UserInfo.Entities.Model
+namespace UserInfo.Entities.DtoModel
 {
-    public class Administrator
+    public class AdminSetDto
     {
-        [Key]
-        public int ID { get; set; }
+        [Required]
         public string UserName { get; set; }
+        [Required]
         public string Password { get; set; }
+        [Required]
         public string Role { get; set; }
     }
 }

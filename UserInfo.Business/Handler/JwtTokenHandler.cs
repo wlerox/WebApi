@@ -4,9 +4,10 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using UserInfo.DataAccess.Abstract;
+using UserInfo.Business.Abstract;
+using UserInfo.Entities.DtoModel;
 
-namespace UserInfo.DataAccess.Handler
+namespace UserInfo.Business.Handler
 {
     public class JwtTokenHandler:IJwtTokenHandler
     {
@@ -17,7 +18,7 @@ namespace UserInfo.DataAccess.Handler
             _configuration = configuration;
         }
 
-        public string GetJwtToken(string username)
+        public string GetJwtToken(AdminSetDto user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(_configuration["JwtAuth:Key"]);
@@ -25,7 +26,8 @@ namespace UserInfo.DataAccess.Handler
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name,username)
+                    new Claim(ClaimTypes.Name,user.UserName),
+                    new Claim(ClaimTypes.Role,user.Role)
                 }),
                 Expires = DateTime.Now.AddHours(1),
                 SigningCredentials = new SigningCredentials(

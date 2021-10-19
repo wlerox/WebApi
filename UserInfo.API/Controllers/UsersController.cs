@@ -9,7 +9,7 @@ namespace UserInfo.API.Controllers
     /// <summary>
     /// User Controller
     /// </summary>
-    [Authorize]
+    [Authorize(Roles = "Admin,User")]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase

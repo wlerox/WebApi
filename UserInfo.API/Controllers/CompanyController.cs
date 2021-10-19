@@ -6,7 +6,7 @@ using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.API.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,User")]
     [Route("api/[controller]")]
     [ApiController]
     public class CompaniesController : ControllerBase
@@ -55,6 +55,7 @@ namespace UserInfo.API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCompany(int id)
         {
@@ -72,6 +73,7 @@ namespace UserInfo.API.Controllers
         /// </summary>
         /// <param name="company"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateNewCompany([FromBody] CompanyDto company)
         {
@@ -83,6 +85,7 @@ namespace UserInfo.API.Controllers
         /// </summary>
         /// <param name="company"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateCompany([FromBody] CompanyDto company)
         {

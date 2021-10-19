@@ -11,11 +11,17 @@ namespace UserInfo.DataAccess
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer("Server=localhost ; Database=UserDb; uid=sa  ; pwd=a123456!");
         }*/
+        protected UserDbContext()
+        {
+        }
         public UserDbContext(DbContextOptions<UserDbContext> options)
             :base(options)
         {
            // options.Database.EnsureCreated();
         }
+
+        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             

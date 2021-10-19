@@ -9,7 +9,18 @@ namespace UserInfo.DataAccess
         public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Administrator>().HasData(
-                new Administrator() { ID = 1, UserName = "admin", Password = "1234" });
+                new Administrator() { ID = 1, UserName = "admin", Password = "1234", Role = "Admin" },
+                new Administrator() { ID = 2, UserName = "Delphine", Password = "1234", Role = "User" },
+                new Administrator() { ID = 3, UserName = "Bret", Password = "1234", Role = "User" },
+                new Administrator() { ID = 4, UserName = "Antonette", Password = "1234", Role = "User" },
+                new Administrator() { ID = 5, UserName = "Samantha", Password = "1234", Role = "User" },
+                new Administrator() { ID = 6, UserName = "Karianne", Password = "1234", Role = "User" },
+                new Administrator() { ID = 7, UserName = "Kamren", Password = "1234", Role = "User" },
+                new Administrator() { ID = 8, UserName = "Leopoldo_Corkery", Password = "1234", Role = "User" },
+                new Administrator() { ID = 9, UserName = "Elwyn.Skiles", Password = "1234", Role = "User" },
+                new Administrator() { ID = 10, UserName = "Maxime_Nienow", Password = "1234", Role = "User" },
+                new Administrator() { ID = 11, UserName = "Moriah.Stanton", Password = "1234", Role = "User" }
+                );
 
 
             modelBuilder.Entity<Geolocation>().HasData(

@@ -44,6 +44,24 @@
             <param name="address"></param>
             <returns></returns>
         </member>
+        <member name="M:UserInfo.API.Controllers.AuthController.ChanceUserPassword(System.String,System.String,System.String)">
+            <summary>
+            Chance user password
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <param name="new_Password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UserInfo.API.Controllers.AuthController.ChangeUserRole(System.String,System.String,System.Int32)">
+            <summary>
+            Change User Role (Role id = Admin(role_id= 1) or User(role_id= 2) ) Admin = full authority, User = limited authority
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
         <member name="M:UserInfo.API.Controllers.CompaniesController.#ctor(UserInfo.Business.Abstract.ICompanyService)">
             <summary>
             Constracter is
@@ -155,14 +173,14 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:UserInfo.API.Controllers.UsersController.CreateNewUser(UserInfo.Entities.DtoModel.UserDto)">
+        <member name="M:UserInfo.API.Controllers.UsersController.CreateNewUser(UserInfo.Entities.DtoModel.UserSetDto)">
             <summary>
             Create New User
             </summary>
             <param name="user"></param>
             <returns></returns>
         </member>
-        <member name="M:UserInfo.API.Controllers.UsersController.UpdateUser(UserInfo.Entities.DtoModel.UserDto)">
+        <member name="M:UserInfo.API.Controllers.UsersController.UpdateUser(UserInfo.Entities.DtoModel.UserSetDto)">
             <summary>
             Update User
             </summary>

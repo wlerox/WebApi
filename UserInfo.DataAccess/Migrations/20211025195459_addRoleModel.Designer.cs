@@ -9,15 +9,15 @@ using UserInfo.DataAccess;
 namespace UserInfo.DataAccess.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20210817071540_updatemigrationUserDbIgnore")]
-    partial class updatemigrationUserDbIgnore
+    [Migration("20211025195459_addRoleModel")]
+    partial class addRoleModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.9")
+                .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("UserInfo.Entities.Address", b =>
@@ -311,6 +311,33 @@ namespace UserInfo.DataAccess.Migrations
                             Id = 10,
                             Lat = "-38.2386",
                             Lng = "57.2232"
+                        });
+                });
+
+            modelBuilder.Entity("UserInfo.Entities.Model.Role", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("RoleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RoleId");
+
+                    b.ToTable("Role");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            RoleName = "Admin"
+                        },
+                        new
+                        {
+                            RoleId = 2,
+                            RoleName = "User"
                         });
                 });
 

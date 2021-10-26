@@ -9,18 +9,18 @@ using UserInfo.DataAccess;
 namespace UserInfo.DataAccess.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20210912155857_createAdminTableDb")]
-    partial class createAdminTableDb
+    [Migration("20211026180849_addCrytoPassword")]
+    partial class addCrytoPassword
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.9")
+                .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("UserInfo.Entities.Address", b =>
+            modelBuilder.Entity("UserInfo.Entities.Model.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -141,7 +141,7 @@ namespace UserInfo.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("UserInfo.Entities.Company", b =>
+            modelBuilder.Entity("UserInfo.Entities.Model.Company", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -234,7 +234,7 @@ namespace UserInfo.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("UserInfo.Entities.Geolocation", b =>
+            modelBuilder.Entity("UserInfo.Entities.Model.Geolocation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -314,25 +314,34 @@ namespace UserInfo.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("UserInfo.Entities.Model.Administrator", b =>
+            modelBuilder.Entity("UserInfo.Entities.Model.Role", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Password")
+                    b.Property<string>("RoleName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("RoleId");
 
-                    b.HasKey("ID");
+                    b.ToTable("Role");
 
-                    b.ToTable("Administrators");
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            RoleName = "Admin"
+                        },
+                        new
+                        {
+                            RoleId = 2,
+                            RoleName = "User"
+                        });
                 });
 
-            modelBuilder.Entity("UserInfo.Entities.User", b =>
+            modelBuilder.Entity("UserInfo.Entities.Model.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -346,16 +355,22 @@ namespace UserInfo.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
+                    b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Website")
                         .HasColumnType("nvarchar(max)");
@@ -365,6 +380,20 @@ namespace UserInfo.DataAccess.Migrations
                     b.HasIndex("AddressId");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
+
+                    b.HasIndex("Phone")
+                        .IsUnique()
+                        .HasFilter("[Phone] IS NOT NULL");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("Username")
+                        .IsUnique()
+                        .HasFilter("[Username] IS NOT NULL");
 
                     b.ToTable("Users");
 
@@ -376,8 +405,10 @@ namespace UserInfo.DataAccess.Migrations
                             CompanyId = 1,
                             Email = "Sincere@april.biz",
                             Name = "Leanne Graham",
+                            Password = "VGXVTv2elOtua6i63pSXT5a2mtgKkGTVCq6IyINybGcE+oMlJBENfeugsiTqksF19fc7EVMvyteHEaYUesdKuA==",
                             Phone = "1-770-736-8031 x56442",
-                            Username = "Bret",
+                            RoleId = 1,
+                            Username = "admin",
                             Website = "hildegard.org"
                         },
                         new
@@ -387,7 +418,9 @@ namespace UserInfo.DataAccess.Migrations
                             CompanyId = 2,
                             Email = "Shanna@melissa.tv",
                             Name = "Ervin Howell",
+                            Password = "VGXVTv2elOtua6i63pSXT5a2mtgKkGTVCq6IyINybGcE+oMlJBENfeugsiTqksF19fc7EVMvyteHEaYUesdKuA==",
                             Phone = "010-692-6593 x09125",
+                            RoleId = 2,
                             Username = "Antonette",
                             Website = "anastasia.net"
                         },
@@ -398,7 +431,9 @@ namespace UserInfo.DataAccess.Migrations
                             CompanyId = 3,
                             Email = "Nathan@yesenia.net",
                             Name = "Clementine Bauch",
+                            Password = "VGXVTv2elOtua6i63pSXT5a2mtgKkGTVCq6IyINybGcE+oMlJBENfeugsiTqksF19fc7EVMvyteHEaYUesdKuA==",
                             Phone = "1-463-123-4447",
+                            RoleId = 2,
                             Username = "Samantha",
                             Website = "ramiro.info"
                         },
@@ -409,7 +444,9 @@ namespace UserInfo.DataAccess.Migrations
                             CompanyId = 4,
                             Email = "Julianne.OConner@kory.org",
                             Name = "Patricia Lebsack",
+                            Password = "VGXVTv2elOtua6i63pSXT5a2mtgKkGTVCq6IyINybGcE+oMlJBENfeugsiTqksF19fc7EVMvyteHEaYUesdKuA==",
                             Phone = "493-170-9623 x156",
+                            RoleId = 2,
                             Username = "Karianne",
                             Website = "kale.biz"
                         },
@@ -420,7 +457,9 @@ namespace UserInfo.DataAccess.Migrations
                             CompanyId = 5,
                             Email = "Lucio_Hettinger@annie.ca",
                             Name = "Chelsey Dietrich",
+                            Password = "VGXVTv2elOtua6i63pSXT5a2mtgKkGTVCq6IyINybGcE+oMlJBENfeugsiTqksF19fc7EVMvyteHEaYUesdKuA==",
                             Phone = "(254)954-1289",
+                            RoleId = 2,
                             Username = "Kamren",
                             Website = "demarco.info"
                         },
@@ -431,7 +470,9 @@ namespace UserInfo.DataAccess.Migrations
                             CompanyId = 6,
                             Email = "Karley_Dach@jasper.info",
                             Name = "Mrs. Dennis Schulist",
+                            Password = "VGXVTv2elOtua6i63pSXT5a2mtgKkGTVCq6IyINybGcE+oMlJBENfeugsiTqksF19fc7EVMvyteHEaYUesdKuA==",
                             Phone = "1-477-935-8478 x6430",
+                            RoleId = 2,
                             Username = "Leopoldo_Corkery",
                             Website = "ola.org"
                         },
@@ -442,7 +483,9 @@ namespace UserInfo.DataAccess.Migrations
                             CompanyId = 7,
                             Email = "Telly.Hoeger@billy.biz",
                             Name = "Kurtis Weissnat",
+                            Password = "VGXVTv2elOtua6i63pSXT5a2mtgKkGTVCq6IyINybGcE+oMlJBENfeugsiTqksF19fc7EVMvyteHEaYUesdKuA==",
                             Phone = "210.067.6132",
+                            RoleId = 2,
                             Username = "Elwyn.Skiles",
                             Website = "elvis.io"
                         },
@@ -453,7 +496,9 @@ namespace UserInfo.DataAccess.Migrations
                             CompanyId = 8,
                             Email = "Sherwood@rosamond.me",
                             Name = "Nicholas Runolfsdottir V",
+                            Password = "VGXVTv2elOtua6i63pSXT5a2mtgKkGTVCq6IyINybGcE+oMlJBENfeugsiTqksF19fc7EVMvyteHEaYUesdKuA==",
                             Phone = "586.493.6943 x140",
+                            RoleId = 2,
                             Username = "Maxime_Nienow",
                             Website = "jacynthe.com"
                         },
@@ -464,7 +509,9 @@ namespace UserInfo.DataAccess.Migrations
                             CompanyId = 9,
                             Email = "Chaim_McDermott@dana.io",
                             Name = "Glenna Reichert",
+                            Password = "VGXVTv2elOtua6i63pSXT5a2mtgKkGTVCq6IyINybGcE+oMlJBENfeugsiTqksF19fc7EVMvyteHEaYUesdKuA==",
                             Phone = "(775)976-6794 x41206",
+                            RoleId = 2,
                             Username = "Delphine",
                             Website = "conrad.com"
                         },
@@ -475,15 +522,17 @@ namespace UserInfo.DataAccess.Migrations
                             CompanyId = 10,
                             Email = "Rey.Padberg@karina.biz",
                             Name = "Clementina DuBuque",
+                            Password = "VGXVTv2elOtua6i63pSXT5a2mtgKkGTVCq6IyINybGcE+oMlJBENfeugsiTqksF19fc7EVMvyteHEaYUesdKuA==",
                             Phone = "024-648-3804",
+                            RoleId = 2,
                             Username = "Moriah.Stanton",
                             Website = "ambrose.net"
                         });
                 });
 
-            modelBuilder.Entity("UserInfo.Entities.Address", b =>
+            modelBuilder.Entity("UserInfo.Entities.Model.Address", b =>
                 {
-                    b.HasOne("UserInfo.Entities.Geolocation", "Geo")
+                    b.HasOne("UserInfo.Entities.Model.Geolocation", "Geo")
                         .WithMany("Addresses")
                         .HasForeignKey("GeoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -492,38 +541,51 @@ namespace UserInfo.DataAccess.Migrations
                     b.Navigation("Geo");
                 });
 
-            modelBuilder.Entity("UserInfo.Entities.User", b =>
+            modelBuilder.Entity("UserInfo.Entities.Model.User", b =>
                 {
-                    b.HasOne("UserInfo.Entities.Address", "Address")
+                    b.HasOne("UserInfo.Entities.Model.Address", "Address")
                         .WithMany("Users")
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UserInfo.Entities.Company", "Company")
+                    b.HasOne("UserInfo.Entities.Model.Company", "Company")
                         .WithMany("Users")
                         .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UserInfo.Entities.Model.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Address");
 
                     b.Navigation("Company");
+
+                    b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("UserInfo.Entities.Address", b =>
+            modelBuilder.Entity("UserInfo.Entities.Model.Address", b =>
                 {
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("UserInfo.Entities.Company", b =>
+            modelBuilder.Entity("UserInfo.Entities.Model.Company", b =>
                 {
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("UserInfo.Entities.Geolocation", b =>
+            modelBuilder.Entity("UserInfo.Entities.Model.Geolocation", b =>
                 {
                     b.Navigation("Addresses");
+                });
+
+            modelBuilder.Entity("UserInfo.Entities.Model.Role", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

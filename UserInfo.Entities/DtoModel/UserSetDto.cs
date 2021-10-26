@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
-using UserInfo.Entities.Model;
 
 namespace UserInfo.Entities.DtoModel
 {
-    public class UserDto
+    public class UserSetDto
     {
         public int Id { get; set; }
         public String Name { get; set; }
         public String Username { get; set; }
         public String Email { get; set; }
-        //public int AddressId { get; set; }
-        public AddressDto Address { get; set; }
+        public int AddressId { get; set; }
         public String Phone { get; set; }
         public String Website { get; set; }
-        //public int CompanyId { get; set; }
-        public CompanyDto Company { get; set; }
-        public RoleDto Role { get; set; }
+        public int CompanyId { get; set; }
+        public string Password { get; set; }
     }
 }

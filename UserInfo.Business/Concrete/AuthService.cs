@@ -14,7 +14,7 @@ namespace UserInfo.Business.Concrete
             _authRepository = authRepository;
             _tokenHandler = tokenHandler;
         }
-        public async Task<string> Login(AdminDto admin)
+        public async Task<string> Login(UserAuthDto admin)
         {
             var user = await _authRepository.Login(admin);
             if (user == null)
@@ -25,7 +25,7 @@ namespace UserInfo.Business.Concrete
             return token;
         }
 
-        public async Task<AdminSetDto> ChangeUserPassword(string username, string password, string new_password)
+        public async Task<UserSecurityDto> ChangeUserPassword(string username, string password, string new_password)
         {
             var user= await _authRepository.ChangeUserPassword(username, password, new_password);
             if (user == null)
@@ -35,9 +35,9 @@ namespace UserInfo.Business.Concrete
             return user;
         }
 
-        public async Task<AdminSetDto> ChangeUserRole(string username, string password, string role)
+        public async Task<UserSecurityDto> ChangeUserRole(string username, string password, int role_id)
         {
-            return  await _authRepository.ChangeUserRole(username, password, role);
+            return  await _authRepository.ChangeUserRole(username, password, role_id);
         }
     }
 }

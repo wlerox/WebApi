@@ -58,6 +58,7 @@ namespace UserInfo.API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -75,8 +76,9 @@ namespace UserInfo.API.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateNewUser([FromBody] UserDto user)
+        public async Task<IActionResult> CreateNewUser([FromBody] UserSetDto user)
         {
             var newUser = await _userService.CreateUser(user);
             return Ok(newUser);
@@ -86,8 +88,9 @@ namespace UserInfo.API.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin")]
         [HttpPut]
-        public async Task<IActionResult> UpdateUser([FromBody] UserDto user)
+        public async Task<IActionResult> UpdateUser([FromBody] UserSetDto user)
         {
             var updateUser = await _userService.UpdateUser(user);
             if (updateUser != null)

@@ -4,17 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace UserInfo.Entities
+namespace UserInfo.Entities.Model
 {
     public class Company
     {
         [Key]
         public int Id { get; set; }
-        public String Name { get; set; }
-        public String Catchphrase { get; set; }
-        public String Bs { get; set; }
-        [JsonIgnore]
-        [IgnoreDataMember]
+        public string Name { get; set; }
+        public string Catchphrase { get; set; }
+        public string Bs { get; set; }
         public virtual ICollection<User> Users { get; set; }
     }
 }

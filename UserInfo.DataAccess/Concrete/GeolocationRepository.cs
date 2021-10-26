@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using UserInfo.DataAccess.Abstract;
-using UserInfo.Entities;
 using UserInfo.Entities.DtoModel;
+using UserInfo.Entities.Model;
 
 namespace UserInfo.DataAccess.Concrete
 {

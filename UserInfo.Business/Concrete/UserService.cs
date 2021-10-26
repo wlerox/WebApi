@@ -20,7 +20,7 @@ namespace UserInfo.Business.Concrete
             _cacheManipulation = cacheManipulation;
             //_userRepository = new UserRepository();
         }
-        public async Task<UserDto> CreateUser(UserDto user)
+        public async Task<UserDto> CreateUser(UserSetDto user)
         {
             var newUser = await _userRepository.CreateUser(user);
             if (newUser != null)
@@ -99,7 +99,7 @@ namespace UserInfo.Business.Concrete
             return user;
         }
 
-        public async Task<UserDto> UpdateUser(UserDto user)
+        public async Task<UserDto> UpdateUser(UserSetDto user)
         {
             var updateUser = await _userRepository.UpdateUser(user);
             if (updateUser != null)

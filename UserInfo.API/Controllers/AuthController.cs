@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UserInfo.Business.Abstract;
-using UserInfo.DataAccess.Abstract;
 using UserInfo.Entities.DtoModel;
 
 namespace UserInfo.API.Controllers
@@ -21,7 +16,7 @@ namespace UserInfo.API.Controllers
             _service = service;
         }
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] AdminDto admin)
+        public async Task<IActionResult> Login([FromBody] UserAuthDto admin)
         {
             var loginUser = await _service.Login(admin);
             if (loginUser == null)
@@ -46,20 +41,20 @@ namespace UserInfo.API.Controllers
             {
                 return BadRequest("Username or password is incorrect");
             }
-            return Ok(user);
+            return Ok();
         }
         /// <summary>
-        /// Change User Role (Role = Admin or User) Admin = full authority, User = limited authority
+        /// Change User Role (Role id = Admin(role_id= 1) or User(role_id= 2) ) Admin = full authority, User = limited authority
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        [Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("ChangeUserRole")]
-        public async Task<IActionResult> ChangeUserRole(string username, string password,string role)
+        public async Task<IActionResult> ChangeUserRole(string username, string password,int role_id)
         {
-            var user = await _service.ChangeUserRole(username, password, role);
+            var user = await _service.ChangeUserRole(username, password, role_id);
             if (user == null)
             {
                 return BadRequest("Username or password is incorrect");

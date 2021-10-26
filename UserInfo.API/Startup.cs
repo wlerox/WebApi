@@ -37,6 +37,7 @@ namespace UserInfo.API
         {
             //controller
             services.AddControllers();
+            
 
             //mapper
             services.AddAutoMapper(typeof(ApplicationProfile));
@@ -137,7 +138,7 @@ namespace UserInfo.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataAccess.UserDbContext userDbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserDbContext userDbContext)
         {
             if (env.IsDevelopment())
             {

@@ -4,6 +4,6 @@ namespace UserInfo.Business.Abstract
 {
     public interface IJwtTokenHandler
     {
-        string GetJwtToken(AdminSetDto user);
+        string GetJwtToken(UserSecurityDto user);
     }
 }

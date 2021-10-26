@@ -4,16 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace UserInfo.Entities
+namespace UserInfo.Entities.Model
 {
     public class Geolocation
     {
         [Key]
         public int Id { get; set; }
-        public String Lat { get; set; }
-        public String Lng { get; set; }
-        [JsonIgnore]
-        [IgnoreDataMember]
+        public string Lat { get; set; }
+        public string Lng { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }
     }
 }

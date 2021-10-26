@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UserInfo.DataAccess.Abstract;
-using UserInfo.Entities;
+using UserInfo.DataAccess.Helper;
 using UserInfo.Entities.DtoModel;
 using UserInfo.Entities.Model;
 
@@ -20,14 +20,12 @@ namespace UserInfo.DataAccess.Concrete
             _DbContext = context;
             _mapper = mapper;
         }
-        public async Task<UserDto> CreateUser(UserDto newuser)
+        public async Task<UserDto> CreateUser(UserSetDto newuser)
         {
+            
             var userCreate = _mapper.Map<User>(newuser);
-            var adminUser = new Administrator();
-            adminUser.UserName = userCreate.Username;
-            adminUser.Password = "1234";
-            adminUser.Role = "User";
-            _DbContext.Administrators.Add(adminUser);
+            userCreate.RoleId = 2;
+            userCreate.Password = HashingCrypto.hashPassword(userCreate.Password);
             _DbContext.Users.Add(userCreate);
             await _DbContext.SaveChangesAsync();
             return await GetUserById(userCreate.Id);
@@ -52,6 +50,7 @@ namespace UserInfo.DataAccess.Concrete
             var getUserList = await _DbContext.Users.Include(a => a.Address)
                                             .ThenInclude(g => g.Geo)
                                             .Include(c => c.Company)
+                                            .Include(r=>r.Role)
                                             .ToListAsync();
             if (getUserList != null)
             {
@@ -72,6 +71,7 @@ namespace UserInfo.DataAccess.Concrete
             var getUser = await _DbContext.Users.Include(a => a.Address)
                                          .ThenInclude(g => g.Geo)
                                          .Include(c => c.Company)
+                                         .Include(r => r.Role)
                                          .AsNoTracking()
                                          .FirstOrDefaultAsync(b => b.Id.Equals(id));
             if (getUser != null)
@@ -97,20 +97,20 @@ namespace UserInfo.DataAccess.Concrete
 
         }
 
-        public async Task<UserDto> UpdateUser(UserDto user)
+        public async Task<UserDto> UpdateUser(UserSetDto user)
         {
             if (await GetUserById(user.Id) != null)
             {
                 var updateUser = _mapper.Map<User>(user);
                 _DbContext.Users.Update(updateUser);
                 await _DbContext.SaveChangesAsync();
-                user = await GetUserById(updateUser.Id);
+                return await GetUserById(updateUser.Id);
             }
             else
             {
-                user = null;
+                return null;
             }
-            return user;
+            
 
         }
 

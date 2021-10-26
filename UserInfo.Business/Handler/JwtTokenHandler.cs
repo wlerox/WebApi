@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using UserInfo.Business.Abstract;
 using UserInfo.Entities.DtoModel;
+using UserInfo.Entities.Enum;
 
 namespace UserInfo.Business.Handler
 {
@@ -18,8 +19,9 @@ namespace UserInfo.Business.Handler
             _configuration = configuration;
         }
 
-        public string GetJwtToken(AdminSetDto user)
+        public string GetJwtToken(UserSecurityDto user)
         {
+            var role = Enum.GetName(typeof(UserType), user.RoleId);
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(_configuration["JwtAuth:Key"]);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -27,7 +29,7 @@ namespace UserInfo.Business.Handler
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name,user.UserName),
-                    new Claim(ClaimTypes.Role,user.Role)
+                    new Claim(ClaimTypes.Role,role)
                 }),
                 Expires = DateTime.Now.AddHours(1),
                 SigningCredentials = new SigningCredentials(

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using UserInfo.Entities;
 using UserInfo.Entities.Model;
+//using UserInfo.Entities.Model;
 
 namespace UserInfo.DataAccess
 {
@@ -10,12 +10,11 @@ namespace UserInfo.DataAccess
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer("Server=localhost ; Database=UserDb; uid=sa  ; pwd=a123456!");
-        }*/
-        protected UserDbContext()
-        {
         }
-        public UserDbContext(DbContextOptions<UserDbContext> options)
-            :base(options)
+        public UserDbContext()
+        {
+        }*/
+        public UserDbContext(DbContextOptions<UserDbContext> options):base(options)
         {
            // options.Database.EnsureCreated();
         }
@@ -28,7 +27,7 @@ namespace UserInfo.DataAccess
             modelBuilder.Seed();
         }
       
-        public virtual DbSet<Administrator> Administrators { get; set; }
+        //public virtual DbSet<Administrator> Administrators { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Company> Companies { get; set; }

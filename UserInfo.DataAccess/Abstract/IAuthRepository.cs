@@ -6,8 +6,9 @@ namespace UserInfo.DataAccess.Abstract
 {
     public interface IAuthRepository
     {
-        Task<AdminSetDto> Login(AdminDto admin);
-        Task<AdminSetDto> ChangeUserPassword(string username,string password,string new_password);
-        Task<AdminSetDto> ChangeUserRole(string username, string password, string role);
+        Task<UserSecurityDto> Login(UserAuthDto user);
+        Task<UserSecurityDto> ChangeUserPassword(string username,string password,string new_password);
+        Task<UserSecurityDto> ChangeUserRole(string username, string password, int role_id);
+        Task<UserSecurityDto> GetUserByUserName(String username);
     }
 }

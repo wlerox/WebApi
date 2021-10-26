@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 using UserInfo.DataAccess.Abstract;
+using UserInfo.DataAccess.Helper;
 using UserInfo.Entities.DtoModel;
+using UserInfo.Entities.Enum;
 
 namespace UserInfo.DataAccess.Concrete
 {
@@ -18,47 +21,65 @@ namespace UserInfo.DataAccess.Concrete
             _mapper = mapper;
         }
 
-        public async Task<AdminSetDto> ChangeUserPassword(string username, string password, string new_password)
+        public async Task<UserSecurityDto> ChangeUserPassword(string username, string password, string new_password)
         {
-            var user = await _context.Administrators.FirstOrDefaultAsync(x => x.UserName == username && x.Password == password);
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Username == username );
             if (user != null)
             {
-                user.Password = new_password;
-                _context.Administrators.Update(user);
-                await _context.SaveChangesAsync();
-                return _mapper.Map<AdminSetDto>(user);
+                if (HashingCrypto.comparePassword(password, user.Password))
+                {
+                    user.Password = HashingCrypto.hashPassword(new_password);
+                    _context.Users.Update(user);
+                    await _context.SaveChangesAsync();
+                    return _mapper.Map<UserSecurityDto>(await GetUserByUserName(username));
+                }
             }
 
             return null;
             //throw new System.NotImplementedException();
         }
 
-        public async Task<AdminSetDto> ChangeUserRole(string username, string password, string role)
+        public async Task<UserSecurityDto> ChangeUserRole(string username, string password, int role_id)
         {
-            var user = await _context.Administrators.FirstOrDefaultAsync(x => x.UserName == username && x.Password == password);
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Username == username);
             if (user != null)
             {
-                user.Role = role;
-                _context.Administrators.Update(user);
-                await _context.SaveChangesAsync();
-                return _mapper.Map<AdminSetDto>(user);
+                if (HashingCrypto.comparePassword(password, user.Password))
+                {
+                    //user.RoleId=(int)(UserType) Enum.Parse(typeof(UserType),role);
+                    user.RoleId = role_id;
+                    _context.Users.Update(user);
+                    await _context.SaveChangesAsync();
+                    return _mapper.Map<UserSecurityDto>(await GetUserByUserName(username));
+                }
+                
             }
 
             return null;
         }
 
-        public async  Task<AdminSetDto> Login(AdminDto admin)
+        public async Task<UserSecurityDto> GetUserByUserName(string username)
+        {
+            var user = await _context.Users.Include(r=>r.Role).SingleOrDefaultAsync(x => x.Username == username);
+            return _mapper.Map<UserSecurityDto>(user);
+        }
+
+        public async  Task<UserSecurityDto> Login(UserAuthDto loginuser)
         {
 
-            var user =await _context.Administrators.FirstOrDefaultAsync(x => x.UserName == admin.UserName && x.Password == admin.Password);
+            var user =await _context.Users.SingleOrDefaultAsync(x => x.Username == loginuser.UserName);
 
-            if (user == null)
+            if (user != null)
             {
+                if (HashingCrypto.comparePassword(loginuser.Password, user.Password))
+                {
+                    var userDto = _mapper.Map<UserSecurityDto>(user);
+                    return userDto;
+                }
                 return null;
             }
-            var userDto = _mapper.Map<AdminSetDto>(user);
-
-            return userDto;
+            //var userDto = _mapper.Map<AdminSetDto>(user);
+            return null;
             //return username.Equals("admin") && password.Equals("123");
         }
     }

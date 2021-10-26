@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using UserInfo.Entities;
+using UserInfo.DataAccess.Helper;
 using UserInfo.Entities.Model;
 
 namespace UserInfo.DataAccess
@@ -8,20 +8,22 @@ namespace UserInfo.DataAccess
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Administrator>().HasData(
-                new Administrator() { ID = 1, UserName = "admin", Password = "1234", Role = "Admin" },
-                new Administrator() { ID = 2, UserName = "Delphine", Password = "1234", Role = "User" },
-                new Administrator() { ID = 3, UserName = "Bret", Password = "1234", Role = "User" },
-                new Administrator() { ID = 4, UserName = "Antonette", Password = "1234", Role = "User" },
-                new Administrator() { ID = 5, UserName = "Samantha", Password = "1234", Role = "User" },
-                new Administrator() { ID = 6, UserName = "Karianne", Password = "1234", Role = "User" },
-                new Administrator() { ID = 7, UserName = "Kamren", Password = "1234", Role = "User" },
-                new Administrator() { ID = 8, UserName = "Leopoldo_Corkery", Password = "1234", Role = "User" },
-                new Administrator() { ID = 9, UserName = "Elwyn.Skiles", Password = "1234", Role = "User" },
-                new Administrator() { ID = 10, UserName = "Maxime_Nienow", Password = "1234", Role = "User" },
-                new Administrator() { ID = 11, UserName = "Moriah.Stanton", Password = "1234", Role = "User" }
-                );
-
+            /* modelBuilder.Entity<Administrator>().HasData(
+                 new Administrator() { ID = 1, UserName = "admin", Password = "1234", Role = "Admin" },
+                 new Administrator() { ID = 2, UserName = "Delphine", Password = "1234", Role = "User" },
+                 new Administrator() { ID = 3, UserName = "Bret", Password = "1234", Role = "User" },
+                 new Administrator() { ID = 4, UserName = "Antonette", Password = "1234", Role = "User" },
+                 new Administrator() { ID = 5, UserName = "Samantha", Password = "1234", Role = "User" },
+                 new Administrator() { ID = 6, UserName = "Karianne", Password = "1234", Role = "User" },
+                 new Administrator() { ID = 7, UserName = "Kamren", Password = "1234", Role = "User" },
+                 new Administrator() { ID = 8, UserName = "Leopoldo_Corkery", Password = "1234", Role = "User" },
+                 new Administrator() { ID = 9, UserName = "Elwyn.Skiles", Password = "1234", Role = "User" },
+                 new Administrator() { ID = 10, UserName = "Maxime_Nienow", Password = "1234", Role = "User" },
+                 new Administrator() { ID = 11, UserName = "Moriah.Stanton", Password = "1234", Role = "User" }
+                 );*/
+            modelBuilder.Entity<Role>().HasData(
+                new Role() { RoleId = 1, RoleName = "Admin" },
+                new Role() { RoleId = 2, RoleName = "User" });
 
             modelBuilder.Entity<Geolocation>().HasData(
                 new Geolocation() { Id = 1, Lat = "-37.3159", Lng = "81.1496" },
@@ -58,16 +60,19 @@ namespace UserInfo.DataAccess
                 new Company() { Id = 9, Name = "Yost and Sons", Catchphrase = "Switchable contextually-based project", Bs = "aggregate real-time technologies" },
                 new Company() { Id = 10, Name = "Hoeger LLC", Catchphrase = "Centralized empowering task-force", Bs = "target end-to-end models" });
             modelBuilder.Entity<User>().HasData(
-                new User() { Id = 1, Name = "Leanne Graham", Username = "Bret", Email = "Sincere@april.biz", AddressId = 1, Phone = "1-770-736-8031 x56442", Website = "hildegard.org", CompanyId = 1 },
-                new User() { Id = 2, Name = "Ervin Howell", Username = "Antonette", Email = "Shanna@melissa.tv", AddressId = 2, Phone = "010-692-6593 x09125", Website = "anastasia.net", CompanyId = 2 },
-                new User() { Id = 3, Name = "Clementine Bauch", Username = "Samantha", Email = "Nathan@yesenia.net", AddressId = 3, Phone = "1-463-123-4447", Website = "ramiro.info", CompanyId = 3 },
-                new User() { Id = 4, Name = "Patricia Lebsack", Username = "Karianne", Email = "Julianne.OConner@kory.org", AddressId = 4, Phone = "493-170-9623 x156", Website = "kale.biz", CompanyId = 4 },
-                new User() { Id = 5, Name = "Chelsey Dietrich", Username = "Kamren", Email = "Lucio_Hettinger@annie.ca", AddressId = 5, Phone = "(254)954-1289", Website = "demarco.info", CompanyId = 5 },
-                new User() { Id = 6, Name = "Mrs. Dennis Schulist", Username = "Leopoldo_Corkery", Email = "Karley_Dach@jasper.info", AddressId = 6, Phone = "1-477-935-8478 x6430", Website = "ola.org", CompanyId = 6 },
-                new User() { Id = 7, Name = "Kurtis Weissnat", Username = "Elwyn.Skiles", Email = "Telly.Hoeger@billy.biz", AddressId = 7, Phone = "210.067.6132", Website = "elvis.io", CompanyId = 7 },
-                new User() { Id = 8, Name = "Nicholas Runolfsdottir V", Username = "Maxime_Nienow", Email = "Sherwood@rosamond.me", AddressId = 8, Phone = "586.493.6943 x140", Website = "jacynthe.com", CompanyId = 8 },
-                new User() { Id = 9, Name = "Glenna Reichert", Username = "Delphine", Email = "Chaim_McDermott@dana.io", AddressId = 9, Phone = "(775)976-6794 x41206", Website = "conrad.com", CompanyId = 9 },
-                new User() { Id = 10, Name = "Clementina DuBuque", Username = "Moriah.Stanton", Email = "Rey.Padberg@karina.biz", AddressId = 10, Phone = "024-648-3804", Website = "ambrose.net", CompanyId = 10 });
+                new User() { Id = 1, Name = "Leanne Graham", Username = "admin", Email = "Sincere@april.biz", AddressId = 1, Phone = "1-770-736-8031 x56442", Website = "hildegard.org", CompanyId = 1, RoleId = 1, Password = HashingCrypto.hashPassword("1234") },
+                new User() { Id = 2, Name = "Ervin Howell", Username = "Antonette", Email = "Shanna@melissa.tv", AddressId = 2, Phone = "010-692-6593 x09125", Website = "anastasia.net", CompanyId = 2, RoleId = 2, Password = HashingCrypto.hashPassword("1234") },
+                new User() { Id = 3, Name = "Clementine Bauch", Username = "Samantha", Email = "Nathan@yesenia.net", AddressId = 3, Phone = "1-463-123-4447", Website = "ramiro.info", CompanyId = 3, RoleId = 2, Password = HashingCrypto.hashPassword("1234") },
+                new User() { Id = 4, Name = "Patricia Lebsack", Username = "Karianne", Email = "Julianne.OConner@kory.org", AddressId = 4, Phone = "493-170-9623 x156", Website = "kale.biz", CompanyId = 4, RoleId = 2, Password = HashingCrypto.hashPassword("1234") },
+                new User() { Id = 5, Name = "Chelsey Dietrich", Username = "Kamren", Email = "Lucio_Hettinger@annie.ca", AddressId = 5, Phone = "(254)954-1289", Website = "demarco.info", CompanyId = 5, RoleId = 2, Password = HashingCrypto.hashPassword("1234") },
+                new User() { Id = 6, Name = "Mrs. Dennis Schulist", Username = "Leopoldo_Corkery", Email = "Karley_Dach@jasper.info", AddressId = 6, Phone = "1-477-935-8478 x6430", Website = "ola.org", CompanyId = 6, RoleId = 2, Password = HashingCrypto.hashPassword("1234") },
+                new User() { Id = 7, Name = "Kurtis Weissnat", Username = "Elwyn.Skiles", Email = "Telly.Hoeger@billy.biz", AddressId = 7, Phone = "210.067.6132", Website = "elvis.io", CompanyId = 7, RoleId = 2, Password = HashingCrypto.hashPassword("1234") },
+                new User() { Id = 8, Name = "Nicholas Runolfsdottir V", Username = "Maxime_Nienow", Email = "Sherwood@rosamond.me", AddressId = 8, Phone = "586.493.6943 x140", Website = "jacynthe.com", CompanyId = 8, RoleId = 2, Password = HashingCrypto.hashPassword("1234") },
+                new User() { Id = 9, Name = "Glenna Reichert", Username = "Delphine", Email = "Chaim_McDermott@dana.io", AddressId = 9, Phone = "(775)976-6794 x41206", Website = "conrad.com", CompanyId = 9, RoleId = 2, Password = HashingCrypto.hashPassword("1234") },
+                new User() { Id = 10, Name = "Clementina DuBuque", Username = "Moriah.Stanton", Email = "Rey.Padberg@karina.biz", AddressId = 10, Phone = "024-648-3804", Website = "ambrose.net", CompanyId = 10, RoleId = 2, Password = HashingCrypto.hashPassword("1234") });
+            modelBuilder.Entity<User>().HasIndex(user => user.Username).IsUnique();
+            modelBuilder.Entity<User>().HasIndex(user => user.Email).IsUnique();
+            modelBuilder.Entity<User>().HasIndex(user => user.Phone).IsUnique();
         }
     }
 }

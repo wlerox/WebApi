@@ -6,8 +6,8 @@ namespace UserInfo.Business.Abstract
 {
     public interface IAuthService
     {
-        Task<string> Login(AdminDto admin);
-        Task<AdminSetDto> ChangeUserPassword(string username, string password, string new_password);
-        Task<AdminSetDto> ChangeUserRole(string username, string password, string role);
+        Task<string> Login(UserAuthDto admin);
+        Task<UserSecurityDto> ChangeUserPassword(string username, string password, string new_password);
+        Task<UserSecurityDto> ChangeUserRole(string username, string password, int role_id);
     }
 }

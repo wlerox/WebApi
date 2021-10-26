@@ -1,4 +1,4 @@
-# WebApi (uygulama default kullanıcı adı : "admin" şifre: "1234" )
+# WebApi
 Örnek uygulamada kullanılan teknolojiler 
   - örnek veriler "https://jsonplaceholder.typicode.com/users" adresinden temin edilmiştir.
   - servis odaklı mimari(Soa) yaklaşımı kullanılarak geliştirilmiştir.
@@ -17,5 +17,10 @@ uygulamanın hatasız çalışabilmesi için proje indirildikten sonra
   - powershell kullanılarak "docker compose" çalıştırılması ile dockere gerekli uygulamaların yüklenmesi gerçekleştirilmektedir.
   - gerekli yüklemeler sonucunda uygulama ayağa kaltığında "http://localhost:5050/swagger/index.html" linkinden APİ ulaşılabilir olmaktadır.
   - api icerigine ulaşabilmek için yetki(dogrulama) işlemi gerekmektedir.
-  - uygulamada cache işlemi sadece bütün bölümünde aktif olarak çalışmaktadır.
+  - Default olarak her kullanıcının şifresi " 1234 " tür.
+  - Uygulama Default olarak bir Admin kullanıcısı bulunmaktadır. Bu kullanıcının adı = admin şifresi = 1234 rolü = Admin dir.
+  - Uygulamada iki tür kullanıcı rolü bulunmaktadır. Bunlar Admin ve User rolleridir. Admin uygulamada tüm işlemlere yetkili roldür. User ise Users ve Auth bölümünde tam yetkili diğer bölümlerde ise sadece verileri görüntüleme yetkilerine sahiptir.
+  - Rol ve şifre değiştirme işi Auth bölümünden yapılabilmektedir.
+  - yeni bir kullanıcı oluşturuldugunda, yeni kullanıcı için default olarak şifre= 1234 , rolü = User olarak atanır. Eğerki şifre veya rolde değişiklik yapmak isteniyorsa Auth bölümünden değişiklikler yapılabilir.
+  - uygulamada cache işlemi bütün bölümünde aktif olarak çalışmaktadır.
 

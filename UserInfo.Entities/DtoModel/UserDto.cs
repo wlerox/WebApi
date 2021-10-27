@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 using UserInfo.Entities.Model;
 
 namespace UserInfo.Entities.DtoModel
@@ -19,5 +21,8 @@ namespace UserInfo.Entities.DtoModel
         //public int CompanyId { get; set; }
         public CompanyDto Company { get; set; }
         public RoleDto Role { get; set; }
+        [JsonIgnore]
+        [IgnoreDataMember]
+        public string Password { get; set; }
     }
 }

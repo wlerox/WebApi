@@ -99,7 +99,7 @@ namespace UserInfo.Business.Concrete
             return user;
         }
 
-        public async Task<UserDto> UpdateUser(UserSetDto user)
+        public async Task<UserDto> UpdateUser(UserUpdateDto user)
         {
             var updateUser = await _userRepository.UpdateUser(user);
             if (updateUser != null)

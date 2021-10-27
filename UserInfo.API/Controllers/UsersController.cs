@@ -90,7 +90,7 @@ namespace UserInfo.API.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [HttpPut]
-        public async Task<IActionResult> UpdateUser([FromBody] UserSetDto user)
+        public async Task<IActionResult> UpdateUser([FromBody] UserUpdateDto user)
         {
             var updateUser = await _userService.UpdateUser(user);
             if (updateUser != null)

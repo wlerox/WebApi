@@ -9,7 +9,7 @@ namespace UserInfo.DataAccess.Abstract
         Task<List<UserDto>> GetAllUsers();
         Task<UserDto> GetUserById(int id);
         Task<UserDto> CreateUser(UserSetDto user);
-        Task<UserDto> UpdateUser(UserSetDto user);
+        Task<UserDto> UpdateUser(UserUpdateDto user);
         Task DeleteUser(int id);
     }
 }

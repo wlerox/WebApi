@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
 using System.Text;
-using System.Text.Json.Serialization;
 
 namespace UserInfo.Entities.DtoModel
 {
-    public class UserSetDto
+    public class UserUpdateDto
     {
-
-        [JsonIgnore]
-        [IgnoreDataMember]
         public int Id { get; set; }
         public String Name { get; set; }
         [Required]
@@ -25,7 +20,5 @@ namespace UserInfo.Entities.DtoModel
         public String Website { get; set; }
         [Required]
         public int CompanyId { get; set; }
-        [Required]
-        public string Password { get; set; }
     }
 }

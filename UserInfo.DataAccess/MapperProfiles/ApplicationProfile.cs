@@ -31,20 +31,30 @@ namespace UserInfo.DataAccess.MapperProfiles
             */
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<UserDto, User>().ReverseMap();
+
             CreateMap<User, UserSetDto>().ReverseMap();
             CreateMap<UserSetDto, User>().ReverseMap();
-            CreateMap<Address, AddressDto>().ReverseMap();
-            CreateMap<AddressDto, Address>().ReverseMap();
-            CreateMap<Company, CompanyDto>().ReverseMap();
-            CreateMap<CompanyDto, Company>().ReverseMap();
-            CreateMap<Geolocation, GeolocationDto>().ReverseMap();
-            CreateMap<GeolocationDto, Geolocation>().ReverseMap();
-            CreateMap<Role, RoleDto>().ReverseMap();
-            CreateMap<RoleDto, Role>().ReverseMap();
+
+            CreateMap<User, UserUpdateDto>().ReverseMap();
+            CreateMap<UserUpdateDto, User>().ReverseMap();
+
             CreateMap<User, UserAuthDto>().ReverseMap();
             CreateMap<UserAuthDto, User>().ReverseMap();
+
             CreateMap<User, UserSecurityDto>().ReverseMap();
             CreateMap<UserSecurityDto, User>().ReverseMap();
+
+            CreateMap<Address, AddressDto>().ReverseMap();
+            CreateMap<AddressDto, Address>().ReverseMap();
+
+            CreateMap<Company, CompanyDto>().ReverseMap();
+            CreateMap<CompanyDto, Company>().ReverseMap();
+
+            CreateMap<Geolocation, GeolocationDto>().ReverseMap();
+            CreateMap<GeolocationDto, Geolocation>().ReverseMap();
+
+            CreateMap<Role, RoleDto>().ReverseMap();
+            CreateMap<RoleDto, Role>().ReverseMap();
 
         }
     }

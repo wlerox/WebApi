@@ -97,11 +97,14 @@ namespace UserInfo.DataAccess.Concrete
 
         }
 
-        public async Task<UserDto> UpdateUser(UserSetDto user)
+        public async Task<UserDto> UpdateUser(UserSetDto newUser)
         {
-            if (await GetUserById(user.Id) != null)
+            var user = await GetUserById(newUser.Id);
+            if ( user!= null)
             {
-                var updateUser = _mapper.Map<User>(user);
+                var updateUser = _mapper.Map<User>(newUser);
+                updateUser.RoleId = user.Role.RoleId;
+                updateUser.Password = HashingCrypto.hashPassword(newUser.Password);
                 _DbContext.Users.Update(updateUser);
                 await _DbContext.SaveChangesAsync();
                 return await GetUserById(updateUser.Id);
